@@ -4,6 +4,7 @@
 <a href="{{route('admin.user.create')}}" class="btn btn-primary">Add User</a>
 <a href="{{route('admin.role.index')}}" class="btn btn-primary">List Role</a>
 <table class="table table-hover">
+	{{Auth::user()->name}}
 	<thead>
 		<tr>
 			<th>STT</th>
