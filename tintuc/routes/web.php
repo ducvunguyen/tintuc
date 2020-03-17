@@ -17,7 +17,8 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('dashboard', 'AdminController@index')->name('admin')->middleware('auth:admin');
 
 Route::group([
 	'namespace' => 'Admin',
@@ -25,6 +26,9 @@ Route::group([
 	'as'	=> 'admin.',
 	'middleware' => ['CheckAdminLogin','web'],
 ], function(){
+	Route::get('/dashboard', function(){
+		return view('admin.dashboard');
+	});	
 	Route::group([
 			'prefix' => 'user',
 			'as'	=> 'user.',
@@ -52,6 +56,18 @@ Route::group([
 		Route::post('/update/{id}', 'RoleController@update')->name('update')->middleware('CheckPermission:role-edit');
 		Route::get('/delete/{id}', 'RoleController@delete')->name('delete')->middleware('CheckPermission:role-delete');
 	});
+
+	Route::group([
+		'prefix' => 'category',
+		'as'	=> 'category.'
+	], function(){
+		Route::get('/', 'CategoryController@index')->name('index');
+		Route::get('/create', 'CategoryController@create')->name('create');
+		Route::post('/store', 'CategoryController@store')->name('store');
+		Route::get('/edit/{id}', 'CategoryController@edit')->name('edit');
+		Route::post('/update/{id}', 'CategoryController@update')->name('update');
+		Route::post('/delete/{id}', 'CategoryController@delete')->name('delete');
+	});
 });
 
 
@@ -59,14 +75,25 @@ Route::group([
 Route::group([
 		'namespace' => 'Admin',
 		'as'	=> 'login.',
-		'prefix' => 'login'
+		'prefix' => 'user'
 ], function(){
-	Route::get('/', function() {
+	Route::get('login', function() {
 	    return view('admin.auth.login');
 	})->name('form_login');
 
-	Route::post('/login', 'AdminLoginController@login')->name('login_user');
-	Route::any('logout', 'AdminLoginController@logout')->name('logout');
+	Route::post('/login', 'UserLoginController@login')->name('login_user');
+	Route::any('logout', 'UserLoginController@logout')->name('logout');
 
 
 });
+
+
+// Route::group([
+// 	'namespace' => 'Customer',
+// 	'as'	=> 'customer.',
+// 	'prefix' => 'customer',
+// ], function(){
+// 	Route::get('/login', 'AdminLoginController@showlogin')->name('showlogin');
+// 	Route::post('/login', 'AdminLoginController@login')->name('login');
+// 	Route::any('/logout', 'AdminLoginController@logout')->name('logout');
+// });

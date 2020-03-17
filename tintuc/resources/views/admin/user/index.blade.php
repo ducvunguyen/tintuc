@@ -1,16 +1,15 @@
-@extends('layouts.app')
+@extends('admin.layout')
 
 @section('content')
 <a href="{{route('admin.user.create')}}" class="btn btn-primary">Add User</a>
-<a href="{{route('admin.role.index')}}" class="btn btn-primary">List Role</a>
+<p></p>
 <table class="table table-hover">
-	{{Auth::user()->name}}
 	<thead>
 		<tr>
 			<th>STT</th>
 			<th>Name</th>
 			<th>email</th>
-			<th>action</th>
+			<th colspan="2">action</th>
 		</tr>
 	</thead>
 	<tbody>

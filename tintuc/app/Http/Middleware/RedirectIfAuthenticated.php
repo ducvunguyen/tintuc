@@ -22,5 +22,17 @@ class RedirectIfAuthenticated
         }
 
         return $next($request);
+        // switch ($guard) {
+        //     case 'admin':
+        //         # code...
+        //     return redirect()->route('admin');
+        //         break;
+            
+        //     default:
+        //         # code...
+        //         return redirect('/admin/user');
+        //         break;
+        // }
+        // return $next($request);
     }
 }

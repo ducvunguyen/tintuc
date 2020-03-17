@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
-class AdminLoginController extends Controller
+class UserLoginController extends Controller
 {
     public function __construct(){
     	$this->middleware('guest')->except('logout');

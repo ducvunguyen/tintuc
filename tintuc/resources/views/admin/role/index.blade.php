@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layout')
 
 @section('content')
 <a href="{{route('admin.role.create')}}" class="btn btn-primary">Add User</a>
