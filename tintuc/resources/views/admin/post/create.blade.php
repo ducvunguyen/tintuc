@@ -2,8 +2,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 
-			<form id="form-add" method="POST" role="form">
-				@csrf
+			<form id="form-add" method="POST" role="form" enctype="multipart/form-data">
 				<div class="modal-header" id="ok">
 					<h4 class="modal-title">Post</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -43,8 +42,31 @@
 	</div>
 </div>
 
-@section('script')
 <script>
+	config = {};
+	config.entities_latin = false;
+	config.language = 'vi';
+	config.uiColor = '#AADC6E';
+
+	// CKEDITOR.instances.content_add.setData(html);
+
+	CKEDITOR.replace( 'content_add',
+	{
+		filebrowserBrowseUrl: '/ckfinder/ckfinder.html',
+		filebrowserImageBrowseUrl: '/ckfinder/ckfinder.html?type=Images',
+		filebrowserUploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
+		filebrowserImageUploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
+		filebrowserBrowseUrl: '/ckfinder/ckfinder.html',
+		filebrowserBrowseUrl: '/browser/browse.php?type=Images',
+		filebrowserUploadUrl: '/uploader/upload.php?type=Files'
+	});
+
+	
+	function CKEditorAdd(){
+		for (instance in CKEDITOR.instances) {
+			CKEDITOR.instances[instance].updateElement();
+		}
+	}
 	var img = $('<img />');
 	function readURL(input) {
 
@@ -65,6 +87,4 @@
 	$("#image_add").change(function(){
 		readURL(this);
 	});
-
 </script>
-@endsection

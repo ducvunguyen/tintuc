@@ -5,30 +5,7 @@
 	    }
     });
 
-	config = {};
-	config.entities_latin = false;
-	config.language = 'vi';
-	config.uiColor = '#AADC6E';
-
-	// CKEDITOR.instances.content_add.setData(html);
-
-	CKEDITOR.replace( 'content_add',
-	{
-		filebrowserBrowseUrl: '/ckfinder/ckfinder.html',
-		filebrowserImageBrowseUrl: '/ckfinder/ckfinder.html?type=Images',
-		filebrowserUploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
-		filebrowserImageUploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
-		filebrowserBrowseUrl: '/ckfinder/ckfinder.html',
-		filebrowserBrowseUrl: '/browser/browse.php?type=Images',
-		filebrowserUploadUrl: '/uploader/upload.php?type=Files'
-	});
-
 	
-	function CKEditorAdd(){
-		for (instance in CKEDITOR.instances) {
-			CKEDITOR.instances[instance].updateElement();
-		}
-	}
 
 	function modalAdd(){
 		// console.log(1);
@@ -46,7 +23,7 @@
 					$('#modal-add').modal('show');
 				}
 			},error : function(jqXHR, errorThrow, textStatus){
-
+				toastr.error('Có lỗi xảy ra');
 			}
 		});
 	}
@@ -69,6 +46,7 @@
 		$.ajax({
 			type : 'post',
 			url : url,
+			enctype: 'multipart/form-data',
 			data: formData,
 			processData: false,  // tell jQuery not to process the data
       		contentType: false,  // tell jQuery not to set contentType
@@ -83,6 +61,131 @@
 				}
 			}, error : function(jqXHR, textStatus, errorThrow){
 				toastr.error('Có chuyện gì đó đang xảy ra ?');
+			}
+		});
+	}
+
+	function modalDelete(id){
+		var url = '{{route("admin.post.delete-modal", ":id")}}';
+		url = url.replace(":id", id);
+		// console.log(url);
+
+		$.ajax({
+			type: 'get',
+			url: url,
+			success : function(response){
+				if(response.status == 0){
+					toastr.error(response.message);
+				}else{
+					$('#modal-del-div').html(response.html_view);
+					$('#modal-del').modal('show');
+				}
+			},
+			error: function(jqXHR, errorThrow, textStatus){
+				toastr.error('Có chuyện gì đó đang xảy ra ?');	
+			}
+		});
+	}
+
+	function DeletePost(id){
+		// console.log(id);
+		var url = '{{route("admin.post.delete", ":id")}}';
+		url = url.replace(":id", id);
+		// console.log(url);
+
+		$.ajax({
+			type : 'post',
+			url : url,
+			success : function(response){
+				// alert('ok');
+				if (response.status === 0) {
+					toastr.error(response.message);
+				}else{
+					toastr.success(response.message);
+					$('#reload').html(response.html_view);
+					$('#modal-del').modal('hide');
+				}
+			},
+			error : function(jqXHR, errorThrow, textStatus){
+				toastr.error('Có chuyện gì xảy ra ?');
+			}
+		});
+	}
+
+	function modalEdit(id){
+		// console.log(id);
+		var url = '{{route("admin.post.edit-modal", ":id")}}';
+		url = url.replace(":id", id);
+		// console.log(url);
+
+		$.ajax({
+			url : url,
+			type: 'get',
+			success: function(response){
+				// toastr.success('ok');
+				if (response.status ==0) {
+					toastr.error(response.message);
+				}
+				else{
+					$('#modal-edit-div').html(response.modal_edit);
+					$('#modal-up').modal('show');
+				}
+			}, error : function(jqXHR, textStatus, errorThrow){
+				toastr.error('Có chuyện gì đó đang xảy ra ?');
+			}
+		});
+	}
+
+	function EditPost(id){
+		// console.log(id);
+		var url = '{{route("admin.post.update", ":id")}}',
+		url = url.replace(":id", id);
+
+		var formData = new FormData();
+		var content = CKEDITOR.instances['content_up'].getData();
+
+
+		formData.append('title', $('#title_up').val());
+		formData.append('image', $('#image_Up')[0].files[0]);
+		formData.append('category', $('#category_Up').val());
+		formData.append('content', content);
+
+		$.ajax({
+			type: 'post',
+			url : url,
+			data: formData,
+			enctype: 'multipart/form-data',
+			processData: false,  // tell jQuery not to process the data
+      		contentType: false,  // tell jQuery not to set contentType
+			success : function(response){
+				// toastr.success('ok');
+				if (response.status == 0) {
+					toastr.error(response.message);
+				}else{
+					toastr.success(response.message);
+					$('#reload').html(response.view_html);
+					$('#modal-up').modal('hide');
+				}
+			}, error : function(jqXHR, textStatus, errorThrow){
+				toastr.error('Có chuyện gì đó đang xảy ra?');
+			}
+		});
+	}
+
+	function modalView(id){
+		var url = '{{route("admin.post.show", ":id")}}';
+		url = url.replace(":id", id);
+		// console.log(url);
+
+		$.ajax({
+			type : 'get',
+			url : url,
+			success: function(response){
+				// toastr.success('ok');
+				$('#modal-show-div').html(response.modal_view);
+				$('#modal-show').modal('show');
+			},error : function(jqXHR, textStatus, errorThrow){
+				toastr.error('Có chuyện gì đó đang xảy ra');
 			}
 		});
 	}

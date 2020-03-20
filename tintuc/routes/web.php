@@ -93,6 +93,7 @@ Route::group([
 		Route::post('/update/{id}', 'PostController@update')->name('update');
 		Route::post('/delete/{id}', 'PostController@delete')->name('delete');
 		Route::get('/modal-delete/{id}', 'PostController@getDeleteModal')->name('delete-modal');
+		Route::get('/show/{id}', 'PostController@show')->name('show');
 	});
 });
 
@@ -109,8 +110,6 @@ Route::group([
 
 	Route::post('/login', 'UserLoginController@login')->name('login_user');
 	Route::any('logout', 'UserLoginController@logout')->name('logout');
-
-
 });
 
 

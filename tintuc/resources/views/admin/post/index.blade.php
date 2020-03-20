@@ -1,10 +1,13 @@
 @extends('admin.layout')
 
 @section('content')
-	<div id="">
+	<div id="modal-edit-div">
 		
 	</div>
-	<a href="#" class="btn btn-primary" data-target="#modal-add" data-toggle="modal" onclick="modalAdd()">Add</a>
+	<div id="modal-show-div">
+		
+	</div>
+	<a href="javascript:;" class="btn btn-primary" onclick="modalAdd()">Add</a>
 	<table class="table table-hover">
 		<p></p>
 		<thead>
@@ -13,7 +16,7 @@
 				<th>Title</th>
 				<th>Người tạo</th>
 				<th>Người sửa</th>
-				<th>Action</th>
+				<th colspan="3">Action</th>
 			</tr>
 		</thead>
 		<tbody id="reload">
@@ -22,6 +25,9 @@
 	</table>
 	<div id="modal-add-div">
 		{{-- @include('admin.post.create') --}}
+	</div>
+	<div id="modal-del-div">
+		
 	</div>
 @endsection
 
