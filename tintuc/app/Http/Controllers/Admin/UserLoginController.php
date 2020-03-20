@@ -30,7 +30,7 @@ class UserLoginController extends Controller
     // The user is active, not suspended, and exists.
 
 
-    		return redirect()->route('admin.user.index');
+    		return redirect()->route('admin.dashboard');
 		}
 		else{
 			return redirect()->back();

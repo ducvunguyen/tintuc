@@ -1,21 +1,4 @@
-{{-- @extends('admin.layout')
 
-@section('content')
-	<div class="row">
-		<div class="col-md-6">
-			<form action="{{route('admin.category.store')}}" method="POST" role="form">
-				<legend>Add category</legend>
-				@csrf
-				<div class="form-group">
-					<label for="">Tên thể loại</label>
-					<input name="name_cat" type="text" class="form-control" id="" placeholder="Tên thể loại">
-				</div>
-			
-				<button type="submit" class="btn btn-primary">Submit</button>
-			</form>
-		</div>
-	</div>
-@endsection --}}
 
 <div class="modal fade" id="modal-add">
 	<div class="modal-dialog">
@@ -31,7 +14,7 @@
 
 					<div class="form-group">
 						<label for="">Tên thể loại</label>
-						<input name="name_cat" type="text" class="form-control" id="name_cat" placeholder="Tên thể loại">
+						<input name="name_cat" type="text" class="form-control" id="name_cate" placeholder="Tên thể loại">
 					</div>
 
 

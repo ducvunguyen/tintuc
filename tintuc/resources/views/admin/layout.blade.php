@@ -19,8 +19,8 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
           <a class="dropdown-item" href="{{route('admin.category.index')}}">Category</a>
-          <a class="dropdown-item" href="register.html">Post</a>
-          <a class="dropdown-item" href="forgot-password.html">Banner</a>
+          <a class="dropdown-item" href="{{route('admin.post.index')}}">Post</a>
+          <a class="dropdown-item" href="{{route('admin.banner.index')}}">Banner</a>
           <a class="dropdown-item" href="forgot-password.html">Comment</a>
         </div>
       </li>

@@ -28,7 +28,7 @@ Route::group([
 ], function(){
 	Route::get('/dashboard', function(){
 		return view('admin.dashboard');
-	});	
+	})->name('dashboard');	
 	Route::group([
 			'prefix' => 'user',
 			'as'	=> 'user.',
@@ -64,9 +64,34 @@ Route::group([
 		Route::get('/', 'CategoryController@index')->name('index');
 		Route::get('/create', 'CategoryController@create')->name('create');
 		Route::post('/store', 'CategoryController@store')->name('store');
-		Route::get('/edit/{id}', 'CategoryController@edit')->name('edit');
+		Route::get('/modal-edit/{id}', 'CategoryController@getEditModal')->name('edit-modal');
 		Route::post('/update/{id}', 'CategoryController@update')->name('update');
 		Route::post('/delete/{id}', 'CategoryController@delete')->name('delete');
+		Route::get('/modal-delete/{id}', 'CategoryController@getDeleteModal')->name('delete-modal');
+	});
+
+	Route::group([
+		'prefix' => 'banner',
+		'as'	=> 'banner.'
+	], function(){
+		Route::get('/', 'BannerController@index')->name('index');
+		Route::post('/store', 'BannerController@store')->name('store');
+		Route::get('/modal-edit/{id}', 'BannerController@getEditModal')->name('edit-modal');
+		Route::post('/update/{id}', 'BannerController@update')->name('update');
+		Route::post('/delete/{id}', 'BannerController@delete')->name('delete');
+		Route::get('/modal-delete/{id}', 'BannerController@getDeleteModal')->name('delete-modal');
+	});
+
+	Route::group([
+		'prefix' => 'post',
+		'as'	=> 'post.'
+	], function(){
+		Route::get('/', 'PostController@index')->name('index');
+		Route::post('/store', 'PostController@store')->name('store');
+		Route::get('/modal-edit/{id}', 'PostController@getEditModal')->name('edit-modal');
+		Route::post('/update/{id}', 'PostController@update')->name('update');
+		Route::post('/delete/{id}', 'PostController@delete')->name('delete');
+		Route::get('/modal-delete/{id}', 'PostController@getDeleteModal')->name('delete-modal');
 	});
 });
 

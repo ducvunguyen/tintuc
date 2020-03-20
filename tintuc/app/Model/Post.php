@@ -3,9 +3,11 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Post extends Model
 {
+	protected $table = 'posts';
     protected $fillable = [
     	'title', 'avatar', 'content', 'category_id', 'updated_by', 'created_by'
     ];
@@ -16,5 +18,24 @@ class Post extends Model
 
     public function comments(){
     	return $this->hasMany('App\Model\Comment', 'post_is', 'id');
+    }
+
+    public function UpdatePost($id, $data){
+    	$saveUp = DB::table('posts')->where('id', $id)->update($data);
+
+    	if ($saveUp) {
+    	 	# code...
+    	 	return true;
+    	 } 
+    	 return false;
+    }
+
+    public function InsertPost($data){
+    	$saveInsert = DB::table('posts')->insert($data);
+
+    	if ($saveInsert) {
+    		return true;
+    	}
+    	return false;
     }
 }
