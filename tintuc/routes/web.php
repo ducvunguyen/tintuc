@@ -17,7 +17,8 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('dashboard', 'AdminController@index')->name('admin')->middleware('auth:admin');
 
 Route::group([
 	'namespace' => 'Admin',
@@ -25,6 +26,9 @@ Route::group([
 	'as'	=> 'admin.',
 	'middleware' => ['CheckAdminLogin','web'],
 ], function(){
+	Route::get('/dashboard', function(){
+		return view('admin.dashboard');
+	})->name('dashboard');	
 	Route::group([
 			'prefix' => 'user',
 			'as'	=> 'user.',
@@ -52,6 +56,45 @@ Route::group([
 		Route::post('/update/{id}', 'RoleController@update')->name('update')->middleware('CheckPermission:role-edit');
 		Route::get('/delete/{id}', 'RoleController@delete')->name('delete')->middleware('CheckPermission:role-delete');
 	});
+
+	Route::group([
+		'prefix' => 'category',
+		'as'	=> 'category.'
+	], function(){
+		Route::get('/', 'CategoryController@index')->name('index');
+		Route::get('/create', 'CategoryController@create')->name('create');
+		Route::post('/store', 'CategoryController@store')->name('store');
+		Route::get('/modal-edit/{id}', 'CategoryController@getEditModal')->name('edit-modal');
+		Route::post('/update/{id}', 'CategoryController@update')->name('update');
+		Route::post('/delete/{id}', 'CategoryController@delete')->name('delete');
+		Route::get('/modal-delete/{id}', 'CategoryController@getDeleteModal')->name('delete-modal');
+	});
+
+	Route::group([
+		'prefix' => 'banner',
+		'as'	=> 'banner.'
+	], function(){
+		Route::get('/', 'BannerController@index')->name('index');
+		Route::post('/store', 'BannerController@store')->name('store');
+		Route::get('/modal-edit/{id}', 'BannerController@getEditModal')->name('edit-modal');
+		Route::post('/update/{id}', 'BannerController@update')->name('update');
+		Route::post('/delete/{id}', 'BannerController@delete')->name('delete');
+		Route::get('/modal-delete/{id}', 'BannerController@getDeleteModal')->name('delete-modal');
+	});
+
+	Route::group([
+		'prefix' => 'post',
+		'as'	=> 'post.'
+	], function(){
+		Route::get('/', 'PostController@index')->name('index');
+		Route::post('/store', 'PostController@store')->name('store');
+		Route::get('/create', 'PostController@create')->name('create');
+		Route::get('/modal-edit/{id}', 'PostController@getEditModal')->name('edit-modal');
+		Route::post('/update/{id}', 'PostController@update')->name('update');
+		Route::post('/delete/{id}', 'PostController@delete')->name('delete');
+		Route::get('/modal-delete/{id}', 'PostController@getDeleteModal')->name('delete-modal');
+		Route::get('/show/{id}', 'PostController@show')->name('show');
+	});
 });
 
 
@@ -59,14 +102,23 @@ Route::group([
 Route::group([
 		'namespace' => 'Admin',
 		'as'	=> 'login.',
-		'prefix' => 'login'
+		'prefix' => 'user'
 ], function(){
-	Route::get('/', function() {
+	Route::get('login', function() {
 	    return view('admin.auth.login');
 	})->name('form_login');
 
-	Route::post('/login', 'AdminLoginController@login')->name('login_user');
-	Route::any('logout', 'AdminLoginController@logout')->name('logout');
-
-
+	Route::post('/login', 'UserLoginController@login')->name('login_user');
+	Route::any('logout', 'UserLoginController@logout')->name('logout');
 });
+
+
+// Route::group([
+// 	'namespace' => 'Customer',
+// 	'as'	=> 'customer.',
+// 	'prefix' => 'customer',
+// ], function(){
+// 	Route::get('/login', 'AdminLoginController@showlogin')->name('showlogin');
+// 	Route::post('/login', 'AdminLoginController@login')->name('login');
+// 	Route::any('/logout', 'AdminLoginController@logout')->name('logout');
+// });

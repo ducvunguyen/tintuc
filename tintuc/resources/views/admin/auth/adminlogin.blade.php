@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <base href="{{asset('')}}">
+
   <title>SB Admin - Login</title>
 
   <!-- Custom fonts for this template-->
@@ -23,9 +23,9 @@
 
   <div class="container">
     <div class="card card-login mx-auto mt-5">
-      <div class="card-header">User login</div>
+      <div class="card-header">Admin Login</div>
       <div class="card-body">
-        <form action="{{route('login.login_user')}}" method="POST">
+        <form action="{{route('customer.login')}}" method="POST">
           @csrf
           <div class="form-group">
             <div class="form-label-group">

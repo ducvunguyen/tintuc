@@ -1,0 +1,109 @@
+Updatecheck<|||>3<|||>1
+DoUsageStatistics<|||>3<|||>1
+Theme<|||>1<|||>Windows
+SQL Attr Comment Foreground<|||>3<|||>8421504
+SQL Attr ConditionalComment Foreground<|||>3<|||>8421504
+SQL Attr DataType Foreground<|||>3<|||>128
+SQL Attr DelimitedIdentifier Foreground<|||>3<|||>32896
+SQL Attr Function Foreground<|||>3<|||>8388608
+SQL Attr Identifier Foreground<|||>3<|||>32896
+SQL Attr Key Foreground<|||>3<|||>16711680
+SQL Attr Number Foreground<|||>3<|||>8388736
+SQL Attr String Foreground<|||>3<|||>32768
+SQL Attr Symbol Foreground<|||>3<|||>16711680
+SQL Attr TableName Foreground<|||>3<|||>16711935
+SQL Attr Variable Foreground<|||>3<|||>8388736
+FieldColor_Binary<|||>3<|||>8388736
+FieldColor_Datetime<|||>3<|||>128
+FieldColor_Numeric<|||>3<|||>16711680
+FieldColor_Other<|||>3<|||>32896
+FieldColor_Real<|||>3<|||>16711752
+FieldColor_Spatial<|||>3<|||>8421376
+FieldColor_Text<|||>3<|||>32768
+UpdatecheckLastrun<|||>1<|||>2020-03-19 11:31:15
+LastUsageStatisticCall<|||>1<|||>2020-03-11 10:25:10
+LastSessions<|||>1<|||>localhost
+LastActiveSession<|||>1<|||>localhost
+ColWidths_connform.ListSessions<|||>1<|||>163,50,50,50,50,50,53
+ColsVisible_connform.ListSessions<|||>1<|||>0
+ColPositions_connform.ListSessions<|||>1<|||>0,1,2,3,4,5,6
+ColSort_connform.ListSessions<|||>1<|||>0,0
+ColWidths_frmTableEditor.listColumns<|||>1<|||>44,100,154,90,60,65,50,117,130,140,100,100
+ColsVisible_frmTableEditor.listColumns<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10,11
+ColPositions_frmTableEditor.listColumns<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10,11
+ColSort_frmTableEditor.listColumns<|||>1<|||>-1,0
+ColWidths_frmTableEditor.treeIndexes<|||>1<|||>434,100,80
+ColsVisible_frmTableEditor.treeIndexes<|||>1<|||>0,1,2
+ColPositions_frmTableEditor.treeIndexes<|||>1<|||>0,1,2
+ColSort_frmTableEditor.treeIndexes<|||>1<|||>-1,0
+ColWidths_frmTableEditor.listForeignKeys<|||>1<|||>200,80,100,80,80,80
+ColsVisible_frmTableEditor.listForeignKeys<|||>1<|||>0,1,2,3,4,5
+ColPositions_frmTableEditor.listForeignKeys<|||>1<|||>0,1,2,3,4,5
+ColSort_frmTableEditor.listForeignKeys<|||>1<|||>-1,0
+MainWinOnMonitor<|||>3<|||>0
+ColWidths_MainForm.ListDatabases<|||>1<|||>150,80,50,50,50,50,50,50,50,50,120
+ColsVisible_MainForm.ListDatabases<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10
+ColPositions_MainForm.ListDatabases<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10
+ColSort_MainForm.ListDatabases<|||>1<|||>0,0
+ColWidths_MainForm.ListVariables<|||>1<|||>160,200,428
+ColsVisible_MainForm.ListVariables<|||>1<|||>0,1,2
+ColPositions_MainForm.ListVariables<|||>1<|||>0,1,2
+ColSort_MainForm.ListVariables<|||>1<|||>0,0
+ColWidths_MainForm.ListStatus<|||>1<|||>160,428,100,100
+ColsVisible_MainForm.ListStatus<|||>1<|||>0,1,2,3
+ColPositions_MainForm.ListStatus<|||>1<|||>0,1,2,3
+ColSort_MainForm.ListStatus<|||>1<|||>0,0
+ColWidths_MainForm.ListProcesses<|||>1<|||>70,80,80,80,80,50,50,298
+ColsVisible_MainForm.ListProcesses<|||>1<|||>0,1,2,3,4,5,6,7
+ColPositions_MainForm.ListProcesses<|||>1<|||>0,1,2,3,4,5,6,7
+ColSort_MainForm.ListProcesses<|||>1<|||>0,1
+ColWidths_MainForm.ListCommandStats<|||>1<|||>120,100,100,100,368
+ColsVisible_MainForm.ListCommandStats<|||>1<|||>0,1,2,3,4
+ColPositions_MainForm.ListCommandStats<|||>1<|||>0,1,2,3,4
+ColSort_MainForm.ListCommandStats<|||>1<|||>1,1
+ColWidths_MainForm.ListTables<|||>1<|||>120,70,70,120,120,70,100,50,70,70,70,70,70,90,120,70,70,70,50
+ColsVisible_MainForm.ListTables<|||>1<|||>0,1,2,3,4,5,6,18
+ColPositions_MainForm.ListTables<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18
+ColSort_MainForm.ListTables<|||>1<|||>0,0
+MainWinMaximized<|||>3<|||>1
+FindDialogSearchHistory<|||>1<|||>2<{{{><}}}>
+Servers\localhost\SessionCreated<|||>1<|||>2020-03-11 10:25:13
+Servers\localhost\Host<|||>1<|||>127.0.0.1
+Servers\localhost\WindowsAuth<|||>3<|||>0
+Servers\localhost\CleartextPluginEnabled<|||>3<|||>0
+Servers\localhost\User<|||>1<|||>root
+Servers\localhost\Password<|||>1<|||>3
+Servers\localhost\LoginPrompt<|||>3<|||>0
+Servers\localhost\Port<|||>1<|||>3306
+Servers\localhost\NetType<|||>3<|||>0
+Servers\localhost\Compressed<|||>3<|||>0
+Servers\localhost\LocalTimeZone<|||>3<|||>0
+Servers\localhost\QueryTimeout<|||>3<|||>30
+Servers\localhost\KeepAlive<|||>3<|||>20
+Servers\localhost\FullTableStatus<|||>3<|||>1
+Servers\localhost\Databases<|||>1<|||>
+Servers\localhost\Library<|||>1<|||>libmariadb.dll
+Servers\localhost\Comment<|||>1<|||>
+Servers\localhost\StartupScriptFilename<|||>1<|||>
+Servers\localhost\TreeBackground<|||>3<|||>536870911
+Servers\localhost\SSHtunnelHost<|||>1<|||>
+Servers\localhost\SSHtunnelHostPort<|||>3<|||>22
+Servers\localhost\SSHtunnelUser<|||>1<|||>
+Servers\localhost\SSHtunnelPassword<|||>1<|||>5
+Servers\localhost\SSHtunnelTimeout<|||>3<|||>4
+Servers\localhost\SSHtunnelPrivateKey<|||>1<|||>
+Servers\localhost\SSHtunnelPort<|||>3<|||>3307
+Servers\localhost\SSL_Active<|||>3<|||>0
+Servers\localhost\SSL_Key<|||>1<|||>
+Servers\localhost\SSL_Cert<|||>1<|||>
+Servers\localhost\SSL_CA<|||>1<|||>
+Servers\localhost\SSL_Cipher<|||>1<|||>
+Servers\localhost\ServerVersionFull<|||>1<|||>10.4.6-MariaDB - mariadb.org binary distribution
+Servers\localhost\ConnectCount<|||>3<|||>17
+Servers\localhost\ServerVersion<|||>3<|||>100406
+Servers\localhost\LastConnect<|||>1<|||>2020-03-20 10:21:15
+Servers\localhost\lastUsedDB<|||>1<|||>tintuc
+Servers\localhost\tintuc|banners\Sort<|||>1<|||>0_name_url|
+Servers\localhost\tintuc|permission_role\Sort<|||>1<|||>0_updated_by|0_permission_id|
+Servers\localhost\tintuc|permission_role\RecentFilters\1<|||>1<|||>role_id=16
+Servers\localhost\tintuc|posts\Sort<|||>1<|||>1_avatar|

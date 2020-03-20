@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
-class AdminLoginController extends Controller
+class UserLoginController extends Controller
 {
     public function __construct(){
     	$this->middleware('guest')->except('logout');
@@ -30,7 +30,7 @@ class AdminLoginController extends Controller
     // The user is active, not suspended, and exists.
 
 
-    		return redirect()->route('admin.user.index');
+    		return redirect()->route('admin.dashboard');
 		}
 		else{
 			return redirect()->back();
