@@ -88,6 +88,7 @@ Route::group([
 	], function(){
 		Route::get('/', 'PostController@index')->name('index');
 		Route::post('/store', 'PostController@store')->name('store');
+		Route::get('/create', 'PostController@create')->name('create');
 		Route::get('/modal-edit/{id}', 'PostController@getEditModal')->name('edit-modal');
 		Route::post('/update/{id}', 'PostController@update')->name('update');
 		Route::post('/delete/{id}', 'PostController@delete')->name('delete');

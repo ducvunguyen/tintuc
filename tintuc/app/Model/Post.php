@@ -20,6 +20,13 @@ class Post extends Model
     	return $this->hasMany('App\Model\Comment', 'post_is', 'id');
     }
 
+    public function creator(){
+        return $this->belongsTo('App\User', 'created_by', 'id');
+    }
+    public function editor(){
+        return $this->belongsTo('App\User', 'updated_by', 'id');
+    }
+
     public function UpdatePost($id, $data){
     	$saveUp = DB::table('posts')->where('id', $id)->update($data);
 
