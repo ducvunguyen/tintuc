@@ -1,4 +1,4 @@
-  <footer class="sticky-footer">
+  {{-- <footer class="sticky-footer"> --}}
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
             <span>Copyright © Your Website 2019</span>
@@ -55,8 +55,9 @@
   <script src="admin/js/demo/datatables-demo.js"></script>
   <script src="admin/js/demo/chart-area-demo.js"></script>
   <script src="ckeditor/ckeditor.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" type="text/javascript" charset="utf-8" async defer></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" type="text/javascript" charset="utf-8" async defer></script>
+  <script src="validate/dist/jquery.validate.js"></script>
+  {{-- <script src="validate/lib/jquery.js"></script> --}}
     @yield('script')
 </body>
 

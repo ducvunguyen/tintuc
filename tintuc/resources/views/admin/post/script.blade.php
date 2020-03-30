@@ -5,9 +5,29 @@
 	    }
     });
 
+	function initValiadate() {
+		$( "#form-add" ).validate({
+			rules: {
+				title: "required",
+				image: "required",
+				category: "required",
+				content: "required",
+			},
+			messages: {
+				title: "Please enter the title",
+				image: "Please select an image",
+				category: "Please enter a valid email address",
+				content: "Please accept our policy",
+			},
+			submitHandler: function(form) {
+		      AddPost();
+		    }
+		});
+	}
 	
 
 	function modalAdd(){
+		
 		// console.log(1);
 		var url = '{{route("admin.post.create")}}';
 		// console.log(url);
@@ -20,6 +40,7 @@
 					toastr.error(response.message);
 				}else{
 					$('#modal-add-div').html(response.html_view);
+					initValiadate();
 					$('#modal-add').modal('show');
 				}
 			},error : function(jqXHR, errorThrow, textStatus){
@@ -182,8 +203,12 @@
 			url : url,
 			success: function(response){
 				// toastr.success('ok');
-				$('#modal-show-div').html(response.modal_view);
+				if (response.status === 0) {
+					toastr.error(response.message);
+				}else{
+					$('#modal-show-div').html(response.modal_view);
 				$('#modal-show').modal('show');
+				}			
 			},error : function(jqXHR, textStatus, errorThrow){
 				toastr.error('Có chuyện gì đó đang xảy ra');
 			}

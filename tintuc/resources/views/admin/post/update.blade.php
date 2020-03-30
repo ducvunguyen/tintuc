@@ -2,13 +2,13 @@
 	
 </style>
 <div class="modal fade" id="modal-up">
-	<div class="modal-dialog">
+	<div class="modal-dialog" style="min-width: 70%">
 		<div class="modal-content">
 
 			<form id="form-add" method="POST" role="form" enctype="multipart/form-data">
 				@csrf
 				<div class="modal-header" id="ok">
-					<h4 class="modal-title">Post</h4>
+					<h4 class="modal-title">Sửa bài viết</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">

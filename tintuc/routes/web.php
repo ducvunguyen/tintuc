@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+// dd(app()->make('hello'));
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,7 +18,7 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-// Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home')->middleware(['can:edit-profile']);
 // Route::get('dashboard', 'AdminController@index')->name('admin')->middleware('auth:admin');
 
 Route::group([

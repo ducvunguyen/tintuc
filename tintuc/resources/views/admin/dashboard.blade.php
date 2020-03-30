@@ -2,4 +2,5 @@
 
 @section('content')
 	This is dashboard
+	{{Auth::user()->name}}
 @endsection

@@ -16,33 +16,17 @@ class BannerController extends Controller
 
     public function store(Request $request, Banner $banner)
     {
-    	 // dd($request->all());
-    	// dd($request->image);
-    	// dd($request->hasFile('image'));
-    	$url_name = Banner::select('name_url')->get();
-    	// dd($url_name);
 
+    	$url_name = Banner::select('name_url')->get();
+        $date = date("Ymdhisa");
 
 	    $checkUpload = false;
         $namefile = '';
         if($request->hasFile('image')){
-            $file = $request->file('image');
-            // dd($file);
-            // lay ten file
-            // dd($namefile);		
+            $file = $request->file('image');		
             $namefile = $file->getClientOriginalName();
-            foreach ($url_name as $key => $url) {
-            	if ($namefile == $url->name_url) {
-            		
-            		return [
-            			'status' => 0,
-            			'message' => 'Ảnh này đã có rồi bạn nên chọn ảnh khác !!!',
-            		];
-            	}
-            }
-
+            $namefile = $date.$namefile;
             if($file->getError() == 0){
-                // upload
                 if($file->move("uploads/banners",$namefile)){
                     $checkUpload = true;
                 }
@@ -63,6 +47,7 @@ class BannerController extends Controller
 	    	// dd($namefile);
 	    	$dataInsert = [
 	    		'name_url' => $namefile,
+                'user_id' => Auth::id(),
 	    		'created_by' => Auth::user()->id,
 	    		'updated_by' => Auth::user()->id,
 	    	];
@@ -116,64 +101,77 @@ class BannerController extends Controller
     		'message' => 'Tim thành công',
     		'modal_html' => view('admin.banner.delete', compact('getBannerInfo'))->render()
     	];
-
     }
 
     public function delete($id){
     	$getBannerInfo = Banner::find($id);
-    	$namefile = $getBannerInfo->name_url;
-    	$patchFile = public_path().'/uploads/banners/'.$namefile;
-    	// dd($getBannerInfo);
+        $user = Auth::user();
+        if ($user->can('banner', $getBannerInfo)) {
+            $namefile = $getBannerInfo->name_url;
+            $patchFile = public_path().'/uploads/banners/'.$namefile;
 
-    	$deleteBanner = $getBannerInfo->delete();
+            $deleteBanner = $getBannerInfo->delete();
 
-    	if(empty($getBannerInfo)){
-    		return [
-    			'status' => 0,
-    			'message' => 'Không tìm thấy ID banner !!!!'
-    		];
-    	}
-    	if (empty($deleteBanner)) {
-    		return [
-    			'status' => 0,
-    			'message' => 'Không thể xóa được do id Banner không có !!!!'
-    		];
-    	}
-    	if (!$deleteBanner) {
-    		return [
-    			'status' => 0,
-    			'message' => 'Chưa xóa được ảnh Banner này !!!!!'
-    		];
-    	}
-    	$listBanner = Banner::all();
-    	// dd(view('admin.banner.listbanner', compact('listBanner'))->render());
+            if(empty($getBannerInfo)){
+                return [
+                    'status' => 0,
+                    'message' => 'Không tìm thấy ID banner !!!!'
+                ];
+            }
+            if (empty($deleteBanner)) {
+                return [
+                    'status' => 0,
+                    'message' => 'Không thể xóa được do id Banner không có !!!!'
+                ];
+            }
+            if (!$deleteBanner) {
+                return [
+                    'status' => 0,
+                    'message' => 'Chưa xóa được ảnh Banner này !!!!!'
+                ];
+            }
+            $listBanner = Banner::all();
+        // dd(view('admin.banner.listbanner', compact('listBanner'))->render());
+            return [
+                'status' => 1,
+                'message' => 'Xóa thành công',
+                'delete_path' => unlink($patchFile),
+                'html_view' => view('admin.banner.listbanner', compact('listBanner'))->render(),
+            ];
+        }
     	return [
-    		'status' => 1,
-    		'message' => 'Xóa thành công',
-    		'delete_path' => unlink($patchFile),
-    		'html_view' => view('admin.banner.listbanner', compact('listBanner'))->render(),
-    	];
+            'status' => 0,
+            'message' => 'Bạn không có quyền truy câp banner này!',
+        ];
     }
 
     public function getEditModal($id){
     	$getBannerInfo = Banner::find($id);
+        $user = Auth::user();
+        if ($user->can('banner', $getBannerInfo)) {
+            if (empty($getBannerInfo)) {
+                return [
+                    'status' => 0,
+                    'message' => 'ID Banner rỗng',
+                ];
+            }
+            if (!$getBannerInfo) {
+                return [
+                    'status' => 0,
+                    'message' => 'Không thất id Banner'
+                ];
+            }
+            return [
+                'status' => 1,
+                'modal_edit' => view('admin.banner.edit', compact('getBannerInfo'))->render(),
+            ];
+        }
+        return [
+            'status' => 0,
+            'message' => 'Bạn không có quyền truy câp banner này!',
+        ];
 
-    	if (empty($getBannerInfo)) {
-    		return [
-    			'status' => 0,
-    			'message' => 'ID Banner rỗng',
-    		];
-    	}
-    	if (!$getBannerInfo) {
-    		return [
-    			'status' => 0,
-    			'message' => 'Không thất id Banner'
-    		];
-    	}
-    	return [
-    		'status' => 1,
-    		'modal_edit' => view('admin.banner.edit', compact('getBannerInfo'))->render(),
-    	];
+    	
     }
 
     public function update(Request $request, Banner $banner, $id){

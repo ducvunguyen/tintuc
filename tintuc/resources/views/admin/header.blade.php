@@ -21,6 +21,7 @@
   <!-- Custom styles for this template-->
   <link href="admin/css/sb-admin.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+  <link rel="stylesheet" href="validate/css/style.css">
 </head>
 
 <body id="page-top">

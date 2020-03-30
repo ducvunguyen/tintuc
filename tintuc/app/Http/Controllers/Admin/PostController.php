@@ -6,14 +6,16 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Post;
 use App\Model\Category;
+use App\Http\Requests\Post\CreatePostRequest;
 use Auth;
+use DB;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
     public function index(){
     	$listPost = Post::with('creator', 'editor')->get();
-        // dd($listPost);
-        // $categories  = Category::all();
+
 		return view('admin.post.index', compact('listPost')); 
     }
 
@@ -34,8 +36,12 @@ class PostController extends Controller
             // return view('admin.post.create', compact('categories'));
     }
 
-    public function store(Request $request, Post $post){
-        // dd($request->all());
+    public function store(CreatePostRequest $request, Post $post){
+        $date = date("Ymdhisa");
+        // dd($date);
+        // $chageName = rand().rand();
+
+        // dd($chageName);
         $category_info  = Category::find($request->category);
         if (!$category_info) {
             return [
@@ -49,9 +55,11 @@ class PostController extends Controller
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-
+            // $new_name = $chageName . "_" . $file;
+            // dd($file);
             $namefile = $file->getClientOriginalName();
-
+            $namefile = $date.$namefile;
+            // dd($namefile);
             if ($file->getError() ==0) {
                 if($file->move("uploads/posts",$namefile)){
                     $checkUpload = true;
@@ -59,7 +67,7 @@ class PostController extends Controller
             }
 
         }
-
+        // dd($namefile);
         // dd($request->category);
         if (!$checkUpload && $namefile=='') {
             return [
@@ -73,6 +81,7 @@ class PostController extends Controller
             'avatar' => $namefile,
             'category_id' => $request->category,
             'content' => $request->content,
+            'user_id' => Auth::user()->id,
             'created_by' => Auth::user()->id,
             'updated_by' => Auth::user()->id,
         ];
@@ -117,60 +126,78 @@ class PostController extends Controller
     }
 
     public function delete($id){
-        $postInfo = Post::find($id);
-        // dd($postInfo);
-        $findImg = $postInfo->avatar;
-        // $patchFile = public_path().'/uploads/banners/'.$namefile;
-        $patchFile = public_path().'/uploads/posts/'.$findImg;
-        $deletePost = $postInfo->delete();
 
-        if (!$deletePost) {
+        $postInfo = Post::find($id);
+
+        if (Gate::allows('view-post', $postInfo)) {
+            $findImg = $postInfo->avatar;
+        // $patchFile = public_path().'/uploads/banners/'.$namefile;
+            $patchFile = public_path().'/uploads/posts/'.$findImg;
+            $deletePost = $postInfo->delete();
+
+            if (!$deletePost) {
+                return [
+                    'status' => 0,
+                    'message' => 'Bạn vẫn chưa xóa được cái ảnh này !!'
+                ];
+            }
+
+            $listPost = Post::with('creator', 'editor')->get();
             return [
-                'status' => 0,
-                'message' => 'Bạn vẫn chưa xóa được cái ảnh này !!'
+                'status' => 1,
+                'message' => 'Xóa thành công !!!',
+                'unlink' => unlink($patchFile),
+                'html_view' => view('admin.post.list_post', compact('listPost'))->render(),
             ];
         }
-
-        $listPost = Post::with('creator', 'editor')->get();
         return [
-            'status' => 1,
-            'message' => 'Xóa thành công !!!',
-            'unlink' => unlink($patchFile),
-            'html_view' => view('admin.post.list_post', compact('listPost'))->render(),
+            'status' => 0,
+            'message' => 'Bạn không có quyền cho bài cho bài viết này',
         ];
+        
     }
 
     public function getEditModal($id){
         // dd($id);
+
         $postInfo = Post::find($id);
-        $cate_id = $postInfo->category_id;
-        $categoryInfo = Category::find($cate_id);
-        $categories  = Category::all();
+        if (Gate::allows('view-post', $postInfo)) {
+            $cate_id = $postInfo->category_id;
+            $categoryInfo = Category::find($cate_id);
+            $categories  = Category::all();
         // dd($categoryInfo);
-        if (!$categoryInfo) {
+            if (!$categoryInfo) {
+                return [
+                    'status' => 0,
+                    'message' => 'Không tìm thấy thể loại bài viết !!!!'
+                ];
+            }
+
             return [
-                'status' => 0,
-                'message' => 'Không tìm thấy thể loại bài viết !!!!'
+                'status' => 1,
+                'modal_edit' => view('admin.post.update', compact('categoryInfo', 'categories', 'postInfo'))->render()
             ];
         }
-
         return [
-            'status' => 1,
-            'modal_edit' => view('admin.post.update', compact('categoryInfo', 'categories', 'postInfo'))->render()
+            'status' => '0',
+            'message' => 'Bạn không có quyền cho bài viết này!!!',
         ];
+        
     }
 
     public function update(Request $request, Post $post ,$id){
         // dd($request->all());
+
         $namefile = '';
         $checkUpload = false;
         // dd($request->hasFile('image'));
+        $chageName = rand().rand();
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
 
             $namefile = $file->getClientOriginalName();
-
+            $namefile = $chageName.$namefile;
             if ($file->getError() ==0) {
                 if($file->move("uploads/posts",$namefile)){
                     $checkUpload = true;
@@ -245,16 +272,24 @@ class PostController extends Controller
     public function show($id){
         // dd($id);
         $postInfo = Post::with('category')->find($id);
-        // dd($postInfo);
-        if (!$postInfo) {
+        // $this->authorize($postInfo, 'view');
+        if (Gate::allows('view-post', $postInfo)) {
+            if (!$postInfo) {
+                return [
+                    'status' => 0,
+                    'message' => 'Không tìm thấy đối tượng',
+                ];
+            }
             return [
-                'status' => 0,
-                'message' => 'Không tìm thấy đối tượng',
+                'sattus' => 1,
+                'modal_view' => view('admin.post.show', compact('postInfo'))->render(),
             ];
-        }
+        } 
         return [
-            'sattus' => 1,
-            'modal_view' => view('admin.post.show', compact('postInfo'))->render(),
+            'status' => 0,
+            'message' => 'Bạn không phải là người viết bài này nên banj xe không có quyền !!!!',
         ];
-    }
+        // dd($postInfo);
+
+  }
 }

@@ -1,10 +1,18 @@
 <div class="modal fade" id="modal-add">
-	<div class="modal-dialog">
+	<div class="modal-dialog" style="min-width: 70%">
 		<div class="modal-content">
-
+			@if ($errors->any())
+			<div class="alert alert-danger">
+				<ul>
+					@foreach ($errors->all() as $error)
+					<li>{{ $error }}</li>
+					@endforeach
+				</ul>
+			</div>
+			@endif
 			<form id="form-add" method="POST" role="form" enctype="multipart/form-data">
 				<div class="modal-header" id="ok">
-					<h4 class="modal-title">Post</h4>
+					<h4 class="modal-title">Thêm bài biết</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
@@ -35,7 +43,7 @@
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button onclick="AddPost()" type="button" class="btn btn-primary">Add</button>
+					<button type="submit" class="btn btn-primary">Add</button>
 				</div>
 			</form>
 		</div>

@@ -15,7 +15,7 @@
 		</div>
 		<div class="form-group">
 			<label for="">password</label>
-			<input value="{{$findUser->password}}" name="password" type="text" class="form-control" id="" placeholder="Input field">
+			<input name="password" type="text" class="form-control" id="" placeholder="Input field">
 		</div>	
 		<div class="form-group">
 			<label for="">re-password</label>
