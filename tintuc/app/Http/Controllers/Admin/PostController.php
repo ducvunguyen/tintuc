@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Post;
 use App\Model\Category;
+use App\Model\Permission;
 use App\Http\Requests\Post\CreatePostRequest;
 use Auth;
 use DB;
@@ -14,13 +15,38 @@ use Illuminate\Support\Facades\Gate;
 class PostController extends Controller
 {
     public function index(){
-    	$listPost = Post::with('creator', 'editor')->get();
+        $users = DB::table('roles')
+            ->join('role_user', 'roles.id', '=', 'role_user.role_id')
+            ->join('permission_role', 'roles.id', '=', 'permission_role.role_id')
+            ->where('role_user.user_id', Auth::id())
+            ->select('permission_role.permission_id')
+            ->get()
+            ->pluck('permission_id')
+            ->toArray();
 
-		return view('admin.post.index', compact('listPost')); 
+        $getPermissionId = Permission::find(16)->id;
+        if (in_array($getPermissionId, $users)) {
+            $listPost = Post::with('creator', 'editor')->get();
+
+            return view('admin.post.index', compact('listPost'));
+        }
+        return 'Bạn không có quyền, rất xin lỗi vì đã làm phiền';
+    	 
     }
 
     public function create(){
         // dd(1);
+        $users = DB::table('roles')
+            ->join('role_user', 'roles.id', '=', 'role_user.role_id')
+            ->join('permission_role', 'roles.id', '=', 'permission_role.role_id')
+            ->where('role_user.user_id', Auth::id())
+            ->select('permission_role.permission_id')
+            ->get()
+            ->pluck('permission_id')
+            ->toArray();
+
+        $getPermissionId = Permission::find(10)->id;
+        if (in_array($getPermissionId, $users)) {
             $categories  = Category::all();
 
             if (count($categories) == 0) {
@@ -33,10 +59,12 @@ class PostController extends Controller
                 'status' => 1,
                 'html_view' => view('admin.post.create', compact('categories'))->render(),
             ];
+        }
             // return view('admin.post.create', compact('categories'));
     }
 
     public function store(CreatePostRequest $request, Post $post){
+
         $date = date("Ymdhisa");
         // dd($date);
         // $chageName = rand().rand();
@@ -126,10 +154,19 @@ class PostController extends Controller
     }
 
     public function delete($id){
+        $users = DB::table('roles')
+            ->join('role_user', 'roles.id', '=', 'role_user.role_id')
+            ->join('permission_role', 'roles.id', '=', 'permission_role.role_id')
+            ->where('role_user.user_id', Auth::id())
+            ->select('permission_role.permission_id')
+            ->get()
+            ->pluck('permission_id')
+            ->toArray();
+        $getPermissionId = Permission::find(14)->id;
 
         $postInfo = Post::find($id);
 
-        if (Gate::allows('view-post', $postInfo)) {
+        if (in_array($getPermissionId, $users)) {
             $findImg = $postInfo->avatar;
         // $patchFile = public_path().'/uploads/banners/'.$namefile;
             $patchFile = public_path().'/uploads/posts/'.$findImg;
@@ -159,9 +196,18 @@ class PostController extends Controller
 
     public function getEditModal($id){
         // dd($id);
+        $users = DB::table('roles')
+            ->join('role_user', 'roles.id', '=', 'role_user.role_id')
+            ->join('permission_role', 'roles.id', '=', 'permission_role.role_id')
+            ->where('role_user.user_id', Auth::id())
+            ->select('permission_role.permission_id')
+            ->get()
+            ->pluck('permission_id')
+            ->toArray();
+        $getPermissionId = Permission::find(13)->id;
 
         $postInfo = Post::find($id);
-        if (Gate::allows('view-post', $postInfo)) {
+        if (in_array($getPermissionId, $users)) {
             $cate_id = $postInfo->category_id;
             $categoryInfo = Category::find($cate_id);
             $categories  = Category::all();
@@ -271,9 +317,20 @@ class PostController extends Controller
 
     public function show($id){
         // dd($id);
+        $users = DB::table('roles')
+            ->join('role_user', 'roles.id', '=', 'role_user.role_id')
+            ->join('permission_role', 'roles.id', '=', 'permission_role.role_id')
+            ->where('role_user.user_id', Auth::id())
+            ->select('permission_role.permission_id')
+            ->get()
+            ->pluck('permission_id')
+            ->toArray();
+        $getPermissionId = Permission::find(15)->id;
+
         $postInfo = Post::with('category')->find($id);
         // $this->authorize($postInfo, 'view');
-        if (Gate::allows('view-post', $postInfo)) {
+        if (in_array($getPermissionId, $users)) {
+            // dd($getPermissionId);
             if (!$postInfo) {
                 return [
                     'status' => 0,
@@ -291,5 +348,5 @@ class PostController extends Controller
         ];
         // dd($postInfo);
 
-  }
+    }
 }

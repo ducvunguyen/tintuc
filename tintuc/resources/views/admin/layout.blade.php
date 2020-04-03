@@ -32,6 +32,7 @@
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
           <a class="dropdown-item" href="{{route('admin.user.index')}}">User</a>
           <a class="dropdown-item" href="{{route('admin.role.index')}}">Role</a>
+          <a class="dropdown-item" href="{{route('admin.permission.index')}}">Permission</a>
         </div>
       </li>
     </ul>

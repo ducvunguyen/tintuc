@@ -14,13 +14,13 @@
 			<input name="display_role" type="text" class="form-control" value="{{$findRole->display_role}}" placeholder="Input field">
 		</div>
 
-		<div class="checkbox">
-				<?php foreach ($listPermission as $key => $listPermission): ?>
-					<input {{$getAllPermissionRole->contains($listPermission->id) ? 'checked' : ''}} value="{{$listPermission->id}}" type="checkbox" class="form-check" name="permission[]"> <?php echo $listPermission->display_permission ?>
-					
-				<?php endforeach ?>
-				
-		</div>
+		 <div class="checkbox">
+            @foreach($listPermission as $key => $listPermission)
+              <label>
+              <input {{$getAllPermissionRole->contains($listPermission->id) ? 'checked' : ''}} name="permission[]" type="checkbox" value="{{$listPermission->id}}"> {{$listPermission->name_permission}}
+            </label><p></p>
+            @endforeach    
+          </div>
 		<button type="submit" class="btn btn-primary">Submit</button>
 	</form>
 </div>

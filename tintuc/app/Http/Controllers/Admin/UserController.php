@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Model\Role;
 use App\Model\RoleUser;
+use App\Model\Permission;
 use Hash;
 use Auth;	
 use Illuminate\Support\Facades\DB;
@@ -22,13 +23,40 @@ class UserController extends Controller
 	}
 
     public function index(){
-    	$listUser = $this->user->all();
-    	return view('admin.user.index', compact('listUser'));
+         $users = DB::table('roles')
+            ->join('role_user', 'roles.id', '=', 'role_user.role_id')
+            ->join('permission_role', 'roles.id', '=', 'permission_role.role_id')
+            ->where('role_user.user_id', Auth::id())
+            ->select('permission_role.permission_id')
+            ->get()
+            ->pluck('permission_id')
+            ->toArray();
+
+        $getPermissionId = Permission::find(1)->id;
+        if (in_array($getPermissionId, $users)) {
+            $listUser = $this->user->all();
+            return view('admin.user.index', compact('listUser'));
+        }
+        return 'Bạn không có quyền!!!';
+    	
     }
 
     public function create(){
-    	$listRole = $this->role->all();
-    	return view('admin.user.create', compact('listRole'));
+        $users = DB::table('roles')
+            ->join('role_user', 'roles.id', '=', 'role_user.role_id')
+            ->join('permission_role', 'roles.id', '=', 'permission_role.role_id')
+            ->where('role_user.user_id', Auth::id())
+            ->select('permission_role.permission_id')
+            ->get()
+            ->pluck('permission_id')
+            ->toArray();
+
+        $getPermissionId = Permission::find(2)->id;
+        if (in_array($getPermissionId, $users)) {
+            $listRole = $this->role->all();
+            return view('admin.user.create', compact('listRole'));
+        }
+        return 'Bạn không có quyền';
     }
 
     public function store(CreateRequest $request){
@@ -62,12 +90,26 @@ class UserController extends Controller
     }
 
     public function edit($id){
-    	$role_id = DB::table('role_user')->where('user_id',$id)->pluck('role_id');
+        $users = DB::table('roles')
+            ->join('role_user', 'roles.id', '=', 'role_user.role_id')
+            ->join('permission_role', 'roles.id', '=', 'permission_role.role_id')
+            ->where('role_user.user_id', Auth::id())
+            ->select('permission_role.permission_id')
+            ->get()
+            ->pluck('permission_id')
+            ->toArray();
 
-    	// dd($role_id);
-    	$findUser = User::findOrFail($id);
-    	$listRole = Role::all();
-    	return view('admin.user.edit', compact('findUser', 'listRole', 'role_id'));
+        $getPermissionId = Permission::find(3)->id;
+        if (in_array($getPermissionId, $users)) {
+            $role_id = DB::table('role_user')->where('user_id',$id)->pluck('role_id');
+
+        // dd($role_id);
+            $findUser = User::findOrFail($id);
+            $listRole = Role::all();
+            return view('admin.user.edit', compact('findUser', 'listRole', 'role_id'));
+        }
+        return 'Bạn không có quyền';
+    	
     }
 
     public function update(Request $request,$id){
@@ -88,7 +130,6 @@ class UserController extends Controller
     		// update user
     		$user_info->name = $request->name;
     		$user_info->email = $request->email;
-    		$user_info->password = Hash::make($request->password);
     		$user_info->save();
     		
     		$new_role_ids = $request->role;
@@ -131,25 +172,39 @@ class UserController extends Controller
     }
 
     public function delete($id){
-    	try {
-    			DB::beginTransaction();
-    			$findUser = User::findOrFail($id);
-    			$findUser->delete();
+        $users = DB::table('roles')
+            ->join('role_user', 'roles.id', '=', 'role_user.role_id')
+            ->join('permission_role', 'roles.id', '=', 'permission_role.role_id')
+            ->where('role_user.user_id', Auth::id())
+            ->select('permission_role.permission_id')
+            ->get()
+            ->pluck('permission_id')
+            ->toArray();
 
-		    	$findRole = RoleUser::where('user_id', $id)->get();
-		    	if (count($findRole )>0) {
-		    		# code...
-		    		foreach ($findRole as $findRole) {
-		    			$findRole->delete();		    	
-		    		}
-		    	}
-		    	$findRole->delete();
-		    	DB::commit();
-    		} catch (Exception $e) {
-    			DB::rollBack();
-    		}	
+        $getPermissionId = Permission::find(4)->id;
+        if (in_array($getPermissionId, $users)) {
+            try {
+                DB::beginTransaction();
+                $findUser = User::findOrFail($id);
+                $findUser->delete();
 
-    	return redirect()->back();
+                $findRole = RoleUser::where('user_id', $id)->get();
+                if (count($findRole )>0) {
+                    # code...
+                    foreach ($findRole as $findRole) {
+                        $findRole->delete();                
+                    }
+                }
+                $findRole->delete();
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollBack();
+            }   
+
+            return redirect()->back();
+        }
+        return 'Bạn không có quyền';
+    	
     }
 
 

@@ -35,13 +35,13 @@ Route::group([
 			'as'	=> 'user.',
 			// 'middleware' => 'CheckPermission:user-list',
 		], function(){
-		Route::get('/', 'UserController@index')->name('index')->middleware('CheckPermission:user-list');
-		Route::get('/create', 'UserController@create')->name('create')->middleware('CheckPermission:user-add');
-		Route::post('/store', 'UserController@store')->name('store')->middleware('CheckPermission:user-add');
+		Route::get('/', 'UserController@index')->name('index');
+		Route::get('/create', 'UserController@create')->name('create');
+		Route::post('/store', 'UserController@store')->name('store');
 
-		Route::get('/edit/{id}', 'UserController@edit')->name('edit')->middleware('CheckPermission:user-edit');
-		Route::post('/update/{id}', 'UserController@update')->name('update')->middleware('CheckPermission:user-edit');
-		Route::get('/delete/{id}', 'UserController@delete')->name('delete')->middleware('CheckPermission:user-delete');
+		Route::get('/edit/{id}', 'UserController@edit')->name('edit');
+		Route::post('/update/{id}', 'UserController@update')->name('update');
+		Route::get('/delete/{id}', 'UserController@delete')->name('delete');
 	});
 
 	Route::group([
@@ -49,13 +49,27 @@ Route::group([
 			'as'	=> 'role.',
 			// 'middleware' => ['CheckPermission:role-list'],
 		], function(){
-		Route::get('/', 'RoleController@index')->name('index')->middleware('CheckPermission:role-list');
-		Route::get('/create', 'RoleController@create')->name('create')->middleware('CheckPermission:role-add');
-		Route::post('/store', 'RoleController@store')->name('store')->middleware('CheckPermission:role-add');
+		Route::get('/', 'RoleController@index')->name('index');
+		Route::get('/create', 'RoleController@create')->name('create');
+		Route::post('/store', 'RoleController@store')->name('store');
 
-		Route::get('/edit/{id}', 'RoleController@edit')->name('edit')->middleware('CheckPermission:role-edit');
-		Route::post('/update/{id}', 'RoleController@update')->name('update')->middleware('CheckPermission:role-edit');
-		Route::get('/delete/{id}', 'RoleController@delete')->name('delete')->middleware('CheckPermission:role-delete');
+		Route::get('/edit/{id}', 'RoleController@edit')->name('edit');
+		Route::post('/update/{id}', 'RoleController@update')->name('update');
+		Route::get('/delete/{id}', 'RoleController@delete')->name('delete');
+	});
+
+	Route::group([
+			'prefix' => 'permission',
+			'as'	=> 'permission.',
+			// 'middleware' => ['CheckPermission:role-list'],
+		], function(){
+		Route::get('/', 'PermissionController@index')->name('index');
+		// Route::get('/loaddata', 'PermissionController@loadData')->name('loadData');
+		Route::get('/create', 'PermissionController@create')->name('create');
+		Route::post('/store', 'PermissionController@store')->name('store');
+		Route::get('/edit/{id}', 'PermissionController@edit')->name('edit');
+		Route::post('/update/{id}', 'PermissionController@update')->name('update');
+		Route::get('/delete/{id}', 'PermissionController@delete')->name('delete');
 	});
 
 	Route::group([

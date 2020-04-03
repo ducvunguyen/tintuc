@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Permission extends Model
 {
@@ -16,5 +17,14 @@ class Permission extends Model
 
     public function roles(){
     	return $this->belongsToMany('App\Model\Role', 'permission_role', 'role_id', 'permission_id');
+    }
+
+    public function saveInsert($data){
+    	$save = DB::table('permissions')->insert($data);
+
+    	if ($save) {
+    		return true;
+    	}
+    	return false;
     }
 }
