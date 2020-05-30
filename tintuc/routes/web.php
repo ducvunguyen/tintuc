@@ -110,6 +110,20 @@ Route::group([
 		Route::get('/modal-delete/{id}', 'PostController@getDeleteModal')->name('delete-modal');
 		Route::get('/show/{id}', 'PostController@show')->name('show');
 	});
+	
+	Route::group([
+		'prefix'=>'comment',
+		'as' => 'comment.',
+	], function(){
+		Route::get('/index', 'CommentController@index')->name('index');
+		Route::post('/load-data-item', 'CommentController@loadDataTable')->name('load-data');
+		Route::post('/add', 'CommentController@add')->name('add');
+		Route::post('/store', 'CommentController@store')->name('store');
+		Route::post('/edit', 'CommentController@edit')->name('edit');
+		Route::post('/update', 'CommentController@update')->name('update');
+		Route::post('/delete', 'CommentController@delete')->name('delete');
+		Route::post('/destroy', 'CommentController@destroy')->name('destroy');
+	});
 });
 
 

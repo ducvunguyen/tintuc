@@ -21,7 +21,7 @@
           <a class="dropdown-item" href="{{route('admin.category.index')}}">Category</a>
           <a class="dropdown-item" href="{{route('admin.post.index')}}">Post</a>
           <a class="dropdown-item" href="{{route('admin.banner.index')}}">Banner</a>
-          <a class="dropdown-item" href="forgot-password.html">Comment</a>
+          <a class="dropdown-item" href="{{route('admin.comment.index')}}">Comment</a>
         </div>
       </li>
        <li class="nav-item dropdown">

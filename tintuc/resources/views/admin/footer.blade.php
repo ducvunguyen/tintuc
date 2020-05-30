@@ -58,6 +58,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" type="text/javascript" charset="utf-8" async defer></script>
   <script src="validate/dist/jquery.validate.js"></script>
   {{-- <script src="validate/lib/jquery.js"></script> --}}
+  <script>
+    $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        });
+
+  </script>
     @yield('script')
 </body>
 
