@@ -1,15 +1,7 @@
 <div class="modal fade" id="modal-add">
 	<div class="modal-dialog" style="min-width: 70%">
 		<div class="modal-content">
-			@if ($errors->any())
-			<div class="alert alert-danger">
-				<ul>
-					@foreach ($errors->all() as $error)
-					<li>{{ $error }}</li>
-					@endforeach
-				</ul>
-			</div>
-			@endif
+		
 			<form id="form-add" method="POST" role="form" enctype="multipart/form-data">
 				<div class="modal-header" id="ok">
 					<h4 class="modal-title">Thêm bài biết</h4>
@@ -36,14 +28,14 @@
 					</div>
 					<div class="form-group">
 						<label for="">Nội dung</label>
-						<input id="content_add" name="content" class="form-control" value="" />
+						<textarea id="content_add" name="content" class="form-control"></textarea>>
 						{{-- <textarea id="content_add" name="content" class="form-control" ></textarea> --}}
 
 					</div>
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-primary">Add</button>
+					<button type="button" class="btn btn-primary" onclick="AddPost()">Add</button>
 				</div>
 			</form>
 		</div>
@@ -69,12 +61,7 @@
 		filebrowserUploadUrl: '/uploader/upload.php?type=Files'
 	});
 
-	
-	function CKEditorAdd(){
-		for (instance in CKEDITOR.instances) {
-			CKEDITOR.instances[instance].updateElement();
-		}
-	}
+
 	var img = $('<img />');
 	function readURL(input) {
 

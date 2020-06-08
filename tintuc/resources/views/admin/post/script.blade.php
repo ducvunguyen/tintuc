@@ -5,25 +5,25 @@
 	    }
     });
 
-	function initValiadate() {
-		$( "#form-add" ).validate({
-			rules: {
-				title: "required",
-				image: "required",
-				category: "required",
-				content: "required",
-			},
-			messages: {
-				title: "Please enter the title",
-				image: "Please select an image",
-				category: "Please enter a valid email address",
-				content: "Please accept our policy",
-			},
-			submitHandler: function(form) {
-		      AddPost();
-		    }
-		});
-	}
+	// function initValiadate() {
+	// 	$( "#form-add" ).validate({
+	// 		rules: {
+	// 			title: "required",
+	// 			image: "required",
+	// 			category: "required",
+	// 			content: "required",
+	// 		},
+	// 		messages: {
+	// 			title: "Please enter the title",
+	// 			image: "Please select an image",
+	// 			category: "Please enter a valid email address",
+	// 			content: "Please accept our policy",
+	// 		},
+	// 		submitHandler: function(form) {
+	// 	      AddPost();
+	// 	    }
+	// 	});
+	// }
 	
 
 	function modalAdd(){
@@ -40,7 +40,7 @@
 					toastr.error(response.message);
 				}else{
 					$('#modal-add-div').html(response.html_view);
-					initValiadate();
+					// initValiadate();
 					$('#modal-add').modal('show');
 				}
 			},error : function(jqXHR, errorThrow, textStatus){
@@ -50,20 +50,16 @@
 	}
 	function AddPost(){
 		var url = '{{route('admin.post.store')}}';
-		// console.log(url);
+		console.log(url);
 		var formData = new FormData();
 		// var content = $('#content_add').val();
 		// var editor = CKEDITOR.editor.replace('content_add');
-		var value = CKEDITOR.instances['content_add'].getData();
+		let value = CKEDITOR.instances['content_add'].getData();
 		// console.log(value);
-
 		formData.append('image', $('#image_add')[0].files[0]);
 		formData.append('title', $('#title_add').val());
 		formData.append('category', $('#category_add').val());
-		formData.append('content', value);
-
-		
-		CKEditorAdd();
+		formData.append('content', value);	
 		$.ajax({
 			type : 'post',
 			url : url,

@@ -4,18 +4,20 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-// use App\Model\Banner;
 use App\Model\Comment;
 use App\Model\Post;
 use Auth;
 use App\Http\Requests\Comment\CommentRequest;
+use App\Http\Lib\MessageLib;
 
 class CommentController extends Controller
 {
     protected $comment_model;
+    protected $mess;
 
     public function __construct(){
         $this->comment_model = new Comment();
+        $this->mess = new MessageLib();
     }
     public function index(){
     	
@@ -24,14 +26,15 @@ class CommentController extends Controller
 
     public function loadDataTable(){
         $list_comment = Comment::with('user')->get();
-        // dd($list_comment);
         return view('admin.comment.datatable', compact('list_comment'));
     }
 
     public function add(){
         $list_post = Post::all();
-        // dd($list_post);
-        return view('admin.comment.add', compact('list_post'));
+        if (count($list_post) > 0) {
+            return view('admin.comment.add', compact('list_post'));
+        }
+        return $this->mess->Error('Không có bài viết nào cả');
     }
 
     public function store(CommentRequest $request){
@@ -42,17 +45,15 @@ class CommentController extends Controller
         $insert->user_id = Auth::id();
 
         if ($insert->save()) {
-            return $this->Success('Bạn đã lưu thành công');
+            return $this->mess->Success('Bạn đã lưu thành công');
         }
 
-        return $this->Error('Bạn đã lưu thất bại');
+        return $this->mess->Error('Bạn đã lưu thất bại');
 
     }
 
     public function edit(Request $request){
-        // dd($request->all());
         $find_comment = $this->comment_model->with('post')->find($request->id);
-        // dd($find_comment);
         return view('admin.comment.edit', compact('find_comment'));
     }
 
@@ -63,16 +64,15 @@ class CommentController extends Controller
         $update->content = $request->content;
 
         if($update->save()){
-             return $this->Success('Bạn đã chỉnh sửa thành công');
+            return $this->mess->Success('Bạn đã chỉnh sửa thành công');
         }
 
-        return $this->Error('Sửa thất bại');
+        return $this->mess->Error('Sửa thất bại');
 
     }
 
     public function delete(Request $request){
         $find_comment = $this->comment_model->find($request->id);
-        // dd($find_comment);
         return view('admin.comment.delete', compact('find_comment'));
     }
 
@@ -80,22 +80,9 @@ class CommentController extends Controller
        $find_comment = $this->comment_model->find($request->id);
 
        if ($find_comment->delete()) {
-            return $this->Success('Bạn đã xóa thành công');
+            return $this->mess->Success('Bạn đã xóa thành công');
        }
-       return $this->Error('Bạn đã thất bại');
+       return $this->mess->Error('Sửa thất bại');
     }
 
-    public function Success($message){
-        return [
-            'status' => 1,
-            'message' => $message,
-        ];
-    }
-
-    public function Error($message){
-        return [
-            'status' => 0,
-            'message' => $message,
-        ];
-    }
 }

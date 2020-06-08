@@ -60,9 +60,12 @@
 				type: 'POST',
 				data: {},
 				success: function(res){
-					toastr.success('thanh cong');
-					$('#div-modal-box').html(res);
-					$('#modal-add').modal('show');
+					if (res.status == 0) {
+						toastr.error(res.message);
+					}else{
+						$('#div-modal-box').html(res);
+						$('#modal-add').modal('show');
+					}
 				},
 				error: function(jqXHR, textStatus, errorThorw){
 					toastr.error('fail');
@@ -173,6 +176,5 @@
 		}
 
 	}
-
 
 </script>

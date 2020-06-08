@@ -56,7 +56,7 @@
   <script src="admin/js/demo/chart-area-demo.js"></script>
   <script src="ckeditor/ckeditor.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" type="text/javascript" charset="utf-8" async defer></script>
-  <script src="validate/dist/jquery.validate.js"></script>
+  {{-- <script src="validate/dist/jquery.validate.js"></script> --}}
   {{-- <script src="validate/lib/jquery.js"></script> --}}
   <script>
     $.ajaxSetup({
